@@ -1,7 +1,7 @@
 # huidu platform
 # version 1.0
 
-FROM ubuntu:18.04
+FROM mysql:5.7.29
 
 ENV VERSION huidu-platform-nightly-202003232200
 ENV HUIDU_BACKEND_PKG huidu-web-backend-0.0.1-SNAPSHOT
@@ -20,7 +20,7 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 && curl -sL https://deb.nodesource.com/setup_10.x | bash -  \
 \
 # install system package
-&& apt-get install -y nodejs openjdk-8-jdk-headless maven mariadb-server \
+&& apt-get install -y nodejs openjdk-8-jdk-headless maven \
 \
 # use china mirror for npm maven
 && cp ./config/maven/settings.xml /etc/maven/settings.xml \
@@ -35,9 +35,9 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 && cp ./config/application.properties ./backend/ \
 \
 # setup env
-&& echo "" > msi_ops.txt && echo "y" >> msi_ops.txt && echo "$MYSQL_ROOT_PASSWORD" >> msi_ops.txt && echo "$MYSQL_ROOT_PASSWORD" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt \
+&& echo "n" > msi_ops.txt && echo "${MYSQL_ROOT_PASSWORD}" >> msi_ops.txt && echo "${MYSQL_ROOT_PASSWORD}" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt \
 && service mysql start && mysql_secure_installation < msi_ops.txt \
-&& echo "CREATE database huidu_online_reading;" | mysql -u root -p"$MYSQL_ROOT_PASSWORD" && mysql -u root -p"$MYSQL_ROOT_PASSWORD" huidu_online_reading < ./config/huidu_online_reading.sql \
+&& echo "CREATE database huidu_online_reading;" | mysql -u root -p"${MYSQL_ROOT_PASSWORD}" && mysql -u root -p"${MYSQL_ROOT_PASSWORD}" huidu_online_reading < ./config/huidu_online_reading.sql \
 \
 # generate version file
 && RUN echo -e "huidu plaform version \"$VERSION\"\nnodejs version \"`nodejs -v`\"\nnpm version \"`npm -v`\"" > ./backend/version && java -version 2>> ./backend/version
