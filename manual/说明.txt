@@ -1,0 +1,15 @@
+数据库
+1.导入 huidu_online_reading.sql
+
+运行
+1.运行 install-pkgs 安装包
+2.打开 run-client 运行前端
+3.运行 compile-server 编译后端
+4.在 application-production.properties 设定数据库参数
+5.打开 run-server 运行后端
+
+
+关于后续更新
+1.先使用 git submodule update --remote 下载
+2.如果有修改后端，那么后端要重新编译
+3.后端可以热更新，拉取即可

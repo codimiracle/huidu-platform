@@ -1,0 +1,3 @@
+@echo off
+echo running...
+java -jar ../huidu-web-backend-0.5.1-SNAPSHOT.jar > ../server.log
