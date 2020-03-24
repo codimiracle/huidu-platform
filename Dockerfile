@@ -24,8 +24,11 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 \
 # install dependences packages
 && cd frontend && cnpm install && cd .. \
-&& cd backend && rm -rf src/test && maven install && maven package && cd .. \
-&& cp ./config/application-production.properties ./backend/ \
+&& cd backend && rm -rf src/test && mvn install && mvn package && cd .. \
+# frontend application config
+&& cp ./config/host-config.ts ./frontend/configs/
+# backend application config
+&& cp ./config/application.properties ./backend/ \
 \
 # setup env
 && echo "" > msi_ops.txt && echo "y" >> msi_ops.txt && echo "$MYSQL_ROOT_PASSWORD" >> msi_ops.txt && echo "$MYSQL_ROOT_PASSWORD" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt && echo "y" >>  msi_ops.txt && echo "y" >> msi_ops.txt \
