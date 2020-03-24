@@ -12,13 +12,15 @@ WORKDIR /app
 
 VOLUME ["/var/log", "/var/lib/mysql"]
 
-# install system package
-RUN apt update && apt-get install -y nodejs npm openjdk-8-jdk-headless maven mariadb-server \
+# use china mirror for apt
+RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 \
-# use china mirror for npm and maven
-&& npm install -g cnpm --registry=https://registry.npm.taobao.org \
-&& cp ./config/apt/sources.list /etc/apt/sources.list \
+# install system package
+&& apt update && apt-get install -y nodejs npm openjdk-8-jdk-headless maven mariadb-server \
+\
+# use china mirror for npm maven
 && cp ./config/maven/settings.xml /etc/maven/settings.xml \
+&& npm install -g cnpm --registry=https://registry.npm.taobao.org \
 \
 # install dependences packages
 && cd frontend && cnpm install && cd .. \
