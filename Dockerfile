@@ -26,7 +26,7 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 && cd frontend && cnpm install && cnpm build && cd .. \
 && cd backend && rm -rf src/test && mvn install && mvn package && cd .. \
 # frontend application config
-&& cp ./config/host-config.ts ./frontend/configs/
+&& cp ./config/host-config.ts ./frontend/configs/ \
 # backend application config
 && cp ./config/application.properties ./backend/ \
 \
