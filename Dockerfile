@@ -23,7 +23,7 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 && npm install -g cnpm --registry=https://registry.npm.taobao.org \
 \
 # install dependences packages
-&& cd frontend && cnpm install && cnpm build && cd .. \
+&& cd frontend && cnpm install && cnpm run build && cd .. \
 && cd backend && rm -rf src/test && mvn install && mvn package && cd .. \
 # frontend application config
 && cp ./config/host-config.ts ./frontend/configs/ \
