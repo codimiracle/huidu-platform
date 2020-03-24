@@ -1,6 +1,8 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/codimiracle/huidu-backend
+	branch = master
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/codimiracle/huidu-web-fronted
+	branch = master
