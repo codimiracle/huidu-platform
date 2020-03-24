@@ -16,9 +16,9 @@ VOLUME ["/var/log", "/var/lib/mysql"]
 RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 \
 # requirements
-&& apt install curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+&& apt update && apt-get install curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
 # install system package
-&& apt update && apt-get install -y nodejs npm openjdk-8-jdk-headless maven mariadb-server \
+&& apt-get install -y nodejs npm openjdk-8-jdk-headless maven mariadb-server \
 \
 # use china mirror for npm maven
 && cp ./config/maven/settings.xml /etc/maven/settings.xml \
