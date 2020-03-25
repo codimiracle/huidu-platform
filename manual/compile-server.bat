@@ -1,4 +1,2 @@
 @echo off
-cd ../backend && mvn install && mvn package -Dmaven.test.skip=true
-copy target/huidu-web-backend-0.5.1-SNAPSHOT.jar ../manual/
-copy src\main\resources\application-production.properties ../manual/
+cd ..\backend && mvn install -Dmaven.test.skip=true && cd ../ && copy "%cd%\backend\target\*.jar" "%cd%\manual\server.jar" && copy "%cd%\backend\src\main\resources\application-production.properties" "%cd%\manual\"
