@@ -1,7 +1,7 @@
 # huidu platform
 # version 1.0
 
-FROM mysql:5.7.17
+FROM mysql:5.7.29
 
 ENV VERSION huidu-platform-nightly-202003232200
 ENV HUIDU_BACKEND_PKG huidu-web-backend-0.0.1-SNAPSHOT
