@@ -3,8 +3,8 @@
 
 FROM mysql:5.7.29
 
-ENV VERSION huidu-platform-nightly-202003232200
-ENV HUIDU_BACKEND_PKG huidu-web-backend-0.0.1-SNAPSHOT
+ENV VERSION huidu-platform-0.7.2
+ENV HUIDU_BACKEND_PKG huidu-web-backend-0.7.2-SNAPSHOT
 
 COPY . /app
 WORKDIR /app
@@ -29,7 +29,7 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 \
 # install dependences packages
 && cd frontend && cnpm install && cnpm run build && cd .. \
-&& cd backend && rm -rf src/test && mvn install && mvn package && cd .. \
+&& cd backend && mvn install -Dmaven.test.skip=true && cd .. \
 # frontend application config
 && cp ./config/host-config.ts ./frontend/configs/ \
 # backend application config
