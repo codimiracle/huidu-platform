@@ -27,12 +27,11 @@ RUN cp ./config/apt/sources.list /etc/apt/sources.list \
 && cp ./config/maven/settings.xml /etc/maven/settings.xml \
 && npm install -g cnpm --registry=https://registry.npm.taobao.org
 # install dependences packages
-RUN cd frontend && cnpm install && npm run build && cd .. 
-RUN cd backend && mvn install -Dmaven.test.skip=true && cd .. 
-# frontend application config
 RUN cp ./config/host-config.ts ./frontend/configs/ \
+&& cd frontend && cnpm install && npm run build && cd .. 
+RUN cd backend && mvn install -Dmaven.test.skip=true && cd .. 
 # backend application config
-&& cp ./config/application.properties ./backend/
+RUN cp ./config/application.properties ./backend/
 # setup env
 RUN  echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/mysql.conf.d/mysqld.cnf \
 && service mysql start \
