@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-PWD="${pwd}"
+WORKDIR=`pwd`
 
 cd ./frontend && exec npm start &
-cd $PWD && cd ./backend && exec java -jar "./target/$HUIDU_BACKEND_PKG.jar"
+cd $WORKDIR && cd ./backend && exec java -jar "./target/$HUIDU_BACKEND_PKG.jar"
 

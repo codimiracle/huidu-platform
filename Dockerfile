@@ -34,12 +34,11 @@ RUN cp ./config/host-config.ts ./frontend/configs/ \
 # backend application config
 && cp ./config/application.properties ./backend/
 # setup env
-RUN  echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/conf.d/mysqld.cnf \
+RUN  echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/mysql.conf.d/mysqld.cnf \
 && service mysql start \
-&& echo "CREATE database huidu_online_reading;" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql \
-\
+&& echo "CREATE database huidu_online_reading;" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql
 # generate version file
-&& RUN echo -e "huidu plaform version \"$VERSION\"\nnodejs version \"`nodejs -v`\"\nnpm version \"`npm -v`\"" > ./backend/version && java -version 2>> ./backend/version
+RUN echo -e "huidu plaform version \"$VERSION\"\nnodejs version \"`nodejs -v`\"\nnpm version \"`npm -v`\"" > ./backend/version && java -version 2>> ./backend/version
 
 EXPOSE 3000 4000
 
