@@ -5,6 +5,7 @@ FROM mysql:5.7.29
 
 ENV VERSION huidu-platform-0.7.2
 ENV HUIDU_BACKEND_PKG huidu-web-backend-0.7.2-SNAPSHOT
+ENV MYSQL_ALLOW_EMPTY_PASSWORD=1
 
 COPY . /app
 WORKDIR /app
@@ -33,12 +34,16 @@ RUN cd backend && mvn install -Dmaven.test.skip=true && cd ..
 # backend application config
 RUN cp ./config/application.properties ./backend/
 # setup env
+CMD [ "/entrypoint.sh" ]
+
 RUN  echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/mysql.conf.d/mysqld.cnf \
-&& service mysql start \
-&& echo "CREATE database huidu_online_reading;" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql
+&& service mysql start
+RUN echo "CREATE database huidu_online_reading;CREATE USER `root`@`127.0.0.1` IDENTIFIED BY '';" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql
 # generate version file
 RUN echo -e "huidu plaform version \"$VERSION\"\nnodejs version \"`nodejs -v`\"\nnpm version \"`npm -v`\"" > ./backend/version && java -version 2>> ./backend/version
+# setting permission
+RUN chmod u+x ./entrypoint.sh
 
 EXPOSE 3000 4000
 
-CMD ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
