@@ -36,9 +36,8 @@ RUN cp ./config/application.properties ./backend/
 # setup env
 CMD [ "/entrypoint.sh" ]
 
-RUN  echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/mysql.conf.d/mysqld.cnf \
-&& service mysql start
-RUN echo "CREATE database huidu_online_reading;CREATE USER `root`@`127.0.0.1` IDENTIFIED BY '';" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql
+RUN echo "default-character-set=utf8mb4" >> /etc/mysql/conf.d/mysql.cnf && echo "character-set-server=utf8mb4" >> /etc/mysql/mysql.conf.d/mysqld.cnf 
+RUN service mysql start && echo "CREATE database huidu_online_reading;CREATE USER \`root\`@\`127.0.0.1\` IDENTIFIED BY '';" | mysql -u root && mysql -u root huidu_online_reading < ./config/huidu_online_reading.sql
 # generate version file
 RUN echo -e "huidu plaform version \"$VERSION\"\nnodejs version \"`nodejs -v`\"\nnpm version \"`npm -v`\"" > ./backend/version && java -version 2>> ./backend/version
 # setting permission
